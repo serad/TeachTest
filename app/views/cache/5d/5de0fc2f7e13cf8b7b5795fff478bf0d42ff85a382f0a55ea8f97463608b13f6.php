@@ -11,9 +11,10 @@ class __TwigTemplate_f95a24f006dc131e237f091c7b4ba086efd7d777de391cff1b1fd7784f6
 
         $this->blocks = array(
             'head' => array($this, 'block_head'),
+            'css' => array($this, 'block_css'),
             'title' => array($this, 'block_title'),
             'content' => array($this, 'block_content'),
-            'footer' => array($this, 'block_footer'),
+            'scripts' => array($this, 'block_scripts'),
         );
     }
 
@@ -26,20 +27,47 @@ class __TwigTemplate_f95a24f006dc131e237f091c7b4ba086efd7d777de391cff1b1fd7784f6
         ";
         // line 4
         $this->displayBlock('head', $context, $blocks);
-        // line 8
+        // line 12
         echo "    </head>
     <body>
-        <div id=\"content\">";
-        // line 10
+\t<nav>
+    \t\t<div class=\"nav-wrapper blue-grey darken\" >
+\t\t     \t<a href=\"/\" class=\"brand-logo right\">T</a>
+\t\t\t<a href=\"#\" data-activates=\"mobile-demo\" class=\"button-collapse\"><i class=\"material-icons\">menu</i></a>
+\t\t      <ul id=\"nav-mobile\" class=\"left hide-on-med-and-down\">
+\t\t        <li class=\"index\"><a href=\"/\">Indice</a></li>
+\t\t        <li class=\"courses\"><a href=\"/index/courses/\">Cursos</a></li>
+\t\t        <li class=\"contact\"><a href=\"/index/contact/\">Contacto</a></li>
+\t\t      </ul>
+\t\t\t<ul class=\"side-nav\" id=\"mobile-demo\">
+\t\t\t\t<li class=\"index\"><a href=\"/\">Indice</a></li>
+\t\t\t\t<li class=\"courses\"><a href=\"/index/courses/\">Cursos</a></li>
+\t\t\t\t<li class=\"contact\"><a href=\"/index/contact/\">Contacto</a></li>
+\t\t\t</ul>
+\t\t</div>
+\t</nav>
+        <div class=\"container\">";
+        // line 30
         $this->displayBlock('content', $context, $blocks);
         echo "</div>
-        <div id=\"footer\">
-            ";
-        // line 12
-        $this->displayBlock('footer', $context, $blocks);
-        // line 15
-        echo "        </div>
-    </body>
+        <footer class=\"page-footer blue-grey darken-2\">
+          <div class=\"footer-copyright\">
+            <div class=\"container\">
+            © 2017 Copyright Text
+            <a class=\"grey-text text-lighten-4 right\" href=\"#!\">More Links</a>
+            </div>
+          </div>
+        </footer>
+
+\t<!--Import jQuery before materialize.js-->
+\t<script type=\"text/javascript\" src=\"https://code.jquery.com/jquery-3.2.1.min.js\"></script>
+      \t<script type=\"text/javascript\" src=\"/public/js/materialize.min.js\"></script>
+\t<script type=\"text/javascript\" src=\"/public/js/main.js\"></script>
+    \t";
+        // line 44
+        $this->displayBlock('scripts', $context, $blocks);
+        // line 45
+        echo "    </body>
 </html>
 ";
     }
@@ -48,29 +76,39 @@ class __TwigTemplate_f95a24f006dc131e237f091c7b4ba086efd7d777de391cff1b1fd7784f6
     public function block_head($context, array $blocks = array())
     {
         // line 5
-        echo "            <link rel=\"stylesheet\" href=\"style.css\" />
+        echo "\t    <link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\">
+\t    <link rel=\"stylesheet\" href=\"/public/css/materialize.min.css\" />
+            <link rel=\"stylesheet\" href=\"/public/css/style.css\" />
+\t    ";
+        // line 8
+        $this->displayBlock('css', $context, $blocks);
+        // line 9
+        echo "\t    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>
             <title>";
-        // line 6
+        // line 10
         $this->displayBlock('title', $context, $blocks);
         echo " - My Webpage</title>
         ";
     }
 
-    public function block_title($context, array $blocks = array())
+    // line 8
+    public function block_css($context, array $blocks = array())
     {
     }
 
     // line 10
+    public function block_title($context, array $blocks = array())
+    {
+    }
+
+    // line 30
     public function block_content($context, array $blocks = array())
     {
     }
 
-    // line 12
-    public function block_footer($context, array $blocks = array())
+    // line 44
+    public function block_scripts($context, array $blocks = array())
     {
-        // line 13
-        echo "                &copy; Copyright 2017 by <a href=\"http://domain.invalid/\">me</a>.
-            ";
     }
 
     public function getTemplateName()
@@ -80,7 +118,7 @@ class __TwigTemplate_f95a24f006dc131e237f091c7b4ba086efd7d777de391cff1b1fd7784f6
 
     public function getDebugInfo()
     {
-        return array (  72 => 13,  69 => 12,  64 => 10,  54 => 6,  51 => 5,  48 => 4,  41 => 15,  39 => 12,  34 => 10,  30 => 8,  28 => 4,  23 => 1,);
+        return array (  110 => 44,  105 => 30,  100 => 10,  95 => 8,  89 => 10,  86 => 9,  84 => 8,  79 => 5,  76 => 4,  70 => 45,  68 => 44,  51 => 30,  31 => 12,  29 => 4,  24 => 1,);
     }
 
     public function getSourceContext()
@@ -89,17 +127,46 @@ class __TwigTemplate_f95a24f006dc131e237f091c7b4ba086efd7d777de391cff1b1fd7784f6
 <html>
     <head>
         {% block head %}
-            <link rel=\"stylesheet\" href=\"style.css\" />
+\t    <link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\">
+\t    <link rel=\"stylesheet\" href=\"/public/css/materialize.min.css\" />
+            <link rel=\"stylesheet\" href=\"/public/css/style.css\" />
+\t    {% block css %}{% endblock %}
+\t    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>
             <title>{% block title %}{% endblock %} - My Webpage</title>
         {% endblock %}
     </head>
     <body>
-        <div id=\"content\">{% block content %}{% endblock %}</div>
-        <div id=\"footer\">
-            {% block footer %}
-                &copy; Copyright 2017 by <a href=\"http://domain.invalid/\">me</a>.
-            {% endblock %}
-        </div>
+\t<nav>
+    \t\t<div class=\"nav-wrapper blue-grey darken\" >
+\t\t     \t<a href=\"/\" class=\"brand-logo right\">T</a>
+\t\t\t<a href=\"#\" data-activates=\"mobile-demo\" class=\"button-collapse\"><i class=\"material-icons\">menu</i></a>
+\t\t      <ul id=\"nav-mobile\" class=\"left hide-on-med-and-down\">
+\t\t        <li class=\"index\"><a href=\"/\">Indice</a></li>
+\t\t        <li class=\"courses\"><a href=\"/index/courses/\">Cursos</a></li>
+\t\t        <li class=\"contact\"><a href=\"/index/contact/\">Contacto</a></li>
+\t\t      </ul>
+\t\t\t<ul class=\"side-nav\" id=\"mobile-demo\">
+\t\t\t\t<li class=\"index\"><a href=\"/\">Indice</a></li>
+\t\t\t\t<li class=\"courses\"><a href=\"/index/courses/\">Cursos</a></li>
+\t\t\t\t<li class=\"contact\"><a href=\"/index/contact/\">Contacto</a></li>
+\t\t\t</ul>
+\t\t</div>
+\t</nav>
+        <div class=\"container\">{% block content %}{% endblock %}</div>
+        <footer class=\"page-footer blue-grey darken-2\">
+          <div class=\"footer-copyright\">
+            <div class=\"container\">
+            © 2017 Copyright Text
+            <a class=\"grey-text text-lighten-4 right\" href=\"#!\">More Links</a>
+            </div>
+          </div>
+        </footer>
+
+\t<!--Import jQuery before materialize.js-->
+\t<script type=\"text/javascript\" src=\"https://code.jquery.com/jquery-3.2.1.min.js\"></script>
+      \t<script type=\"text/javascript\" src=\"/public/js/materialize.min.js\"></script>
+\t<script type=\"text/javascript\" src=\"/public/js/main.js\"></script>
+    \t{% block scripts %}{% endblock %}
     </body>
 </html>
 ", "layouts/base.twig", "/var/www/teachtest.youtome.es/public_html/app/views/layouts/base.twig");

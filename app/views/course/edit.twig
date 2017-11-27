@@ -1,0 +1,60 @@
+{% extends "layouts/base.twig" %}
+{% block title %} Index {% endblock %}
+{% block content %}
+<h1> {% if edit == true %} Edit {% else %} New {% endif %} Course </h1>
+  <div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s12 m12">
+          <i class="material-icons prefix">account_circle</i>
+          <input name="courseName" id="course_name" type="text" class="validate">
+          <label for="icon_prefix">Course Name</label>
+        </div>
+        <div class="input-field col s12 m6">
+          <i class="material-icons prefix">event</i>
+          <input name="dateStart" id="date_start" type="text" class="datepicker">
+          <label for="date_start">Start Date</label>
+        </div>
+	<div class="input-field col s12 m6">
+          <i class="material-icons prefix">event</i>
+          <input name="dateEnd" id="date_end" type="text" class="datepicker">
+          <label for="date_end">End Date</label>
+        </div>
+	<div class="input-field col s12 m6">
+		<i class="material-icons prefix">school</i>
+		<select name="level" id="difficulty">
+			<option value="" disabled selected> Choose your option </option>
+			<option value="1"> Easy </option>
+			<option value="2"> Medium </option>
+			<option value="3"> Hard </option>
+		</select>
+		<label> Difficulty </label>
+        </div>
+	<div class="input-field col s12 m12">
+		<i class="material-icons prefix prefix-check">visibility</i>
+		<input name="active" type="checkbox" id="active" class="filled-in" />
+	      	<label for="active"> Active </label>
+	</div>
+	<div class="row"></div>
+	<div class="input-field col s5 m5 offset-s7">
+		<button id="save-button" class="btn waves-effect waves-light">Submit
+			<i class="material-icons right">send</i>
+		</button>
+	</div>
+      </div>
+    </form>
+  </div>
+{% endblock %}
+{% block scripts %}
+	<script type="text/javascript" src="/public/js/courses.js"></script>
+	<script>
+	{% if edit == true %}
+                var dbCourse = '{{ course|json_encode() }}';
+                dbCourse = JSON.parse( dbCourse );
+		course = new Course( );
+		course.initByJson( dbCourse );
+		console.log(course);
+//		course.initForm();
+	{% endif %}
+	</script>
+{% endblock %}

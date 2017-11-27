@@ -1,0 +1,26 @@
+{% extends "layouts/base.twig" %}
+{% block title %} Index {% endblock %}
+{% block content %} 
+
+Hola courses 
+
+	<ul class="collapsible" data-collapsible="accordion">
+		{% for course in courses %}
+			<li>
+				 <div class="collapsible-header collection-item">
+					<i class="material-icons">filter_drama</i> {{ course.courseName }} <span class="{{ course.getLevel() }} badge"> {{ course.getLevel() }}</span> 
+				</div>
+				<div class="collapsible-body">
+					<div class="collaspsible-body-title">
+						<div class="left-align"></div>
+						<div class="right-align">Start Date: {{ course.getStartDate() }}</div>
+						<div class="right-align">End Date: {{ course.getEndDate() }}</div>
+					</div>
+					<span> {{ course.definition }} </span>
+				</div>
+			</li>
+		{% endfor %}
+	</ul>
+	
+
+{% endblock %}
