@@ -1,0 +1,41 @@
+{% extends "layouts/base.twig" %}
+{% block title %} Courses {% endblock %}
+{% block content %} 
+
+	<ul class="collapsible" data-collapsible="accordion">
+		{% for course in courses %}
+			<li>
+				 <div class="collapsible-header collection-item">
+					<i class="material-icons" data-id="{{ course.courseId }}">filter_drama</i> 
+					 {{ course.courseName }} 
+					 <span class="badge">
+						<a action="edit" > <i class="material-icons" data-id="{{course.courseId}}">create</i> </a>
+						<a action="remove" href="javascript:removeCourse( event, {{course.courseId}})"> <i class="material-icons red-text">delete</i> </a>
+					 </span>
+				 </div>
+				<div class="collapsible-body">
+					<div class="collaspsible-body-title">
+						<div class="left-align"></div>
+						<div class="right-align">Start Date: {{ course.getStartDate() }}</div>
+						<div class="right-align">End Date: {{ course.getEndDate() }}</div>
+					</div>
+					<span> {{ course.definition }} </span>
+				</div>
+			</li>
+		{% endfor %}
+	</ul>
+
+{% endblock %}
+{% block scripts%}
+	<script>
+$("a[action='edit']").on("click", function(e) {
+	window.location = "/course/edit/" + $(e.target).attr('data-id');
+	return false;
+})
+$("a[action='remove'").on("click", function(e) {
+        confirm('Sure remove?');
+	e.preventDefault();
+	return false;
+} );
+	</script>
+{% endblock %}

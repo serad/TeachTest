@@ -4,6 +4,11 @@ error_reporting(E_ALL);
 use Phalcon\Loader;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\Application;
+use Phalcon\Mvc\Dispatcher;
+use Phalcon\Events\Manager as EventsManager;
+use Phalcon\Session\Adapter\Files as Session;
+use App\Plugins\SecurityPlugin;
+use App\Plugins\NotFoundPlugin;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Mvc\Url as UrlProvider;
 
@@ -21,6 +26,7 @@ $loader->registerNamespaces(
     [
         "App\\Controllers"    => APP_PATH . "controllers/",
         "App\\Models" => APP_PATH . "models/",
+	"App\\Plugins" => APP_PATH . "plugins/",
         "App"          => APP_PATH ,
     ]
 );
@@ -37,13 +43,16 @@ $twigFS = new Twig_Loader_Filesystem( APP_PATH . '/views/' );
 $twig = new Twig_Environment($twigFS, array(
     'cache' => false,
 ));
+$di->set(
+    'session',
+    function () {
+        $session = new Session();
 
-$di->set('dispatcher', function() {
-    $dispatcher = new \Phalcon\Mvc\Dispatcher();
-    $dispatcher->setDefaultNamespace('App\Controllers');
-    return $dispatcher;
-});
+        $session->start();
 
+        return $session;
+    }
+);
 $di['twigService'] = function($view, $di) {
     $options = [
         'debug'               => true,
@@ -89,10 +98,31 @@ $di->set('db', function() {
         "charset"   => 'UTF8' //$config->database->encoding
     ));
 });
+$di->set( 'dispatcher', function() {
+
+
+	$eventsManager = new EventsManager();
+	$eventsManager->attach(
+            'dispatch:beforeExecuteRoute',
+            new SecurityPlugin()
+        );
+
+	$eventsManager->attach(
+            'dispatch:beforeException',
+            new NotFoundPlugin()
+        );
+	$dispatcher = new Dispatcher;
+	$dispatcher->setDefaultNamespace('App\Controllers');
+	$dispatcher->setEventsManager($eventsManager);
+	return $dispatcher;
+});
+
+
 
 $application = new Application($di);
 try {
     // Handle the request
+
     $response = $application->handle();
 
     $response->send();

@@ -10,8 +10,8 @@ class IndexController extends \Phalcon\Mvc\Controller
 
 	public function indexAction()
 	{
-		$stStudent = Student::findFirst();
-		$this->view->title = $stStudent->name;
+//		$stStudent = Student::findFirst();
+		$this->view->title = 'Indice';
 	}
 	
 	public function coursesAction()
@@ -23,6 +23,9 @@ class IndexController extends \Phalcon\Mvc\Controller
 	public function contactAction()
 	{
 
+	}
+	public function logoutAction() {
+		$this->session->destroy();
 	}
 
 }

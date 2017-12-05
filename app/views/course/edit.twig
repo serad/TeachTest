@@ -4,6 +4,7 @@
 <h1> {% if edit == true %} Edit {% else %} New {% endif %} Course </h1>
   <div class="row">
     <form class="col s12">
+	<input type="hidden" name="courseId" id="course_id" />
       <div class="row">
         <div class="input-field col s12 m12">
           <i class="material-icons prefix">account_circle</i>
@@ -12,17 +13,17 @@
         </div>
         <div class="input-field col s12 m6">
           <i class="material-icons prefix">event</i>
-          <input name="dateStart" id="date_start" type="text" class="datepicker">
+          <input name="startDate" id="date_start" type="text" class="datepicker">
           <label for="date_start">Start Date</label>
         </div>
 	<div class="input-field col s12 m6">
           <i class="material-icons prefix">event</i>
-          <input name="dateEnd" id="date_end" type="text" class="datepicker">
+          <input name="endDate" id="date_end" type="text" class="datepicker">
           <label for="date_end">End Date</label>
         </div>
 	<div class="input-field col s12 m6">
 		<i class="material-icons prefix">school</i>
-		<select name="level" id="difficulty">
+		<select name="level" id="level">
 			<option value="" disabled selected> Choose your option </option>
 			<option value="1"> Easy </option>
 			<option value="2"> Medium </option>
@@ -37,7 +38,7 @@
 	</div>
 	<div class="row"></div>
 	<div class="input-field col s5 m5 offset-s7">
-		<button id="save-button" class="btn waves-effect waves-light">Submit
+		<button type="button" id="save_button" class="btn waves-effect waves-light">Submit
 			<i class="material-icons right">send</i>
 		</button>
 	</div>
@@ -48,13 +49,20 @@
 {% block scripts %}
 	<script type="text/javascript" src="/public/js/courses.js"></script>
 	<script>
+	$(document).ready( function() {
+		var course = new Course();
 	{% if edit == true %}
-                var dbCourse = '{{ course|json_encode() }}';
+		var dbCourse = '{{ course|json_encode() }}';
                 dbCourse = JSON.parse( dbCourse );
-		course = new Course( );
 		course.initByJson( dbCourse );
 		console.log(course);
-//		course.initForm();
 	{% endif %}
+		course.initForm();
+		$('#save_button').on('click', function() {
+			console.log(course);
+			course.save();
+		});
+	});
+	
 	</script>
 {% endblock %}
