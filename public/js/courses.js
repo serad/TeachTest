@@ -38,9 +38,8 @@ class Course {
 		}, 'json');
 	}
 
-	initByJson(dbCourse) {
+	initByJson( dbCourse ) {
 		this.id = dbCourse.courseId;
-		console.log(dbCourse.courseName);
 		this.courseName = dbCourse.courseName;
 		this.definition = dbCourse.definition;
 		this.startDate = (dbCourse.startDate).replace(/-/g, "/");

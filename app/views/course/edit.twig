@@ -52,9 +52,13 @@
 	$(document).ready( function() {
 		var course = new Course();
 	{% if edit == true %}
-		var dbCourse = '{{ course|json_encode() }}';
-                dbCourse = JSON.parse( dbCourse );
-		course.initByJson( dbCourse );
+		course.id = '{{ course.courseId }}';
+                course.courseName = '{{ course.courseName|escape('js') }}';
+                course.definition = '{{ course.definition|escape('js') }}';
+                course.startDate =  '{{ course.startDate }}'.replace(/-/g, "/");
+                course.endDate =  '{{ course.endDate }}'.replace(/-/g, "/");
+                course.level = '{{ course.level }}';
+                course.active = '{{ course.active }}';
 		console.log(course);
 	{% endif %}
 		course.initForm();
