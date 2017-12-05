@@ -29,9 +29,11 @@ span.badge.hard {
     border-bottom: 1px solid #ddd;
     margin-bottom: 1rem;
 }
+
 .prefix-check {
-	margin-top: 0.58rem;
+    margin-top: 0.58rem;
 }
-.input-field input[type='checkbox'] + label{
-	pointer-events: auto;
+
+.input-field input[type='checkbox']+label {
+    pointer-events: auto;
 }

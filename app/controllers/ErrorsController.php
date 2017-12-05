@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+
 /**
  * ErrorsController
  *
@@ -18,7 +19,7 @@ class ErrorsController extends \Phalcon\Mvc\Controller
     public function show401Action()
     {
     }
-    public function show500Action( $exception = null )
+    public function show500Action($exception = null)
     {
     }
 }

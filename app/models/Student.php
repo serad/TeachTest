@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-class Student extends \Phalcon\Mvc\Model {
+class Student extends \Phalcon\Mvc\Model
+{
 
-	public function initialize()
-	{
-		$this->setSource('Student');
-	}
+    public function initialize()
+    {
+        $this->setSource('Student');
+    }
 
 }
